@@ -13,21 +13,16 @@ a.	Think about what could be going wrong with our calculation. Think about a bet
  4. Upon doing these, the AOV value significantly reduced to $1994.89
 
  5. If the intention is to know the average value per Sneaker, it can get done by doing the average Sneaker value per unit (By also considering total_items). Its value is $153.240.
-
-
+                                                                                                                                                                                                        
 
 b.	What metric would you report for this dataset?
 
   It is essential to have an appropriate metric to report for data. The right metric  aids businesses in understanding their process and growth. For this dataset,     my choice of metric would be the measure of Sales growth over a biweekly period. This measure can help to analyze the trend of sales. Additionally, there is a       possibility of drilling down this measure to weeks, days, and rolling up to months, quarters, and years.
-
+                                                                                                                                                                               
 
 c.	What is its value?
 Ans: 35.416%
-
-
-
-
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 Question 2: 
 
 For this question you’ll need to use SQL. Follow this link to access the data set required for the challenge. Please use queries to answer the following questions. Paste your queries along with your final numerical answers below.
