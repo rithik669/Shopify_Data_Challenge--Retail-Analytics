@@ -39,7 +39,8 @@ ON s.ShipperID = o.ShipperID
 WHERE s.ShipperName = "Speedy Express"                                                                                                                               
 GROUP BY s.ShipperName;                                                                                                                                            
 
-![image](https://user-images.githubusercontent.com/89163061/169713902-f41591f9-a78b-4392-8501-a5542ed5f73b.png)
+![image](https://user-images.githubusercontent.com/89163061/169714452-e461e43e-5e60-4b7b-81cf-8a150a0a977b.png)
+
 
 b.	What is the last name of the employee with the most orders?
 
@@ -55,7 +56,8 @@ GROUP BY e.LastName
 ORDER BY NumOrders DESC                                                                                                                                            
 LIMIT 3;
 
-![image](https://user-images.githubusercontent.com/89163061/169714155-ce869513-19da-4115-bb8f-32f08e80ac70.png)
+![image](https://user-images.githubusercontent.com/89163061/169714437-a01d9bd8-c703-4185-b966-c835fb2a0af1.png)
+
 
 
 c.	What product was ordered the most by customers in Germany?
@@ -74,4 +76,5 @@ GROUP BY p.ProductName
 ORDER BY NumOrders DESC,TotalQty DESC                                                                                                                               
 LIMIT 5;                                                                                                                                                             
 
-![image](https://user-images.githubusercontent.com/89163061/169714251-39353bc2-8007-43d0-96e5-8713417054da.png)
+![image](https://user-images.githubusercontent.com/89163061/169714483-f23ce741-4768-4752-93eb-30c8f2a4f7a4.png)
+
