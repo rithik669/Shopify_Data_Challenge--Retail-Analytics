@@ -34,14 +34,45 @@ Ans: Speedy Express shipped total 54 orders. The following are the query and the
 
 The Query:
 
-SELECT s.ShipperName,COUNT(DISTINCT(o.OrderID)) AS OrdersShipped
-FROM Shippers s JOIN Orders o 
-ON s.ShipperID = o.ShipperID  
-WHERE s.ShipperName = "Speedy Express"
-GROUP BY s.ShipperName;
-
+SELECT s.ShipperName,COUNT(DISTINCT(o.OrderID)) AS OrdersShipped                                                                                            
+FROM Shippers s JOIN Orders o                                                                                                                                       
+ON s.ShipperID = o.ShipperID                                                                                                                                         
+WHERE s.ShipperName = "Speedy Express"                                                                                                                               
+GROUP BY s.ShipperName;                                                                                                                                            
 
 ![image](https://user-images.githubusercontent.com/89163061/169713902-f41591f9-a78b-4392-8501-a5542ed5f73b.png)
 
+b.	What is the last name of the employee with the most orders?
+
+Ans: Peacock is the last name of the employee with the highest number of orders- 40. 
+The following are the query and its result. 
+
+The Query:
+
+SELECT e.LastName,COUNT(DISTINCT(o.OrderID)) AS NumOrders                                                                                                           
+FROM Employees e JOIN Orders o                                                                                                                                       
+ON e.EmployeeID = o.EmployeeID                                                                                                                                       
+GROUP BY e.LastName                                                                                                                                                 
+ORDER BY NumOrders DESC                                                                                                                                            
+LIMIT 3;
+
+![image](https://user-images.githubusercontent.com/89163061/169714155-ce869513-19da-4115-bb8f-32f08e80ac70.png)
 
 
+c.	What product was ordered the most by customers in Germany?
+
+Ans: In terms of orders, Gorgonzola Telino was ordered 5 times which was highest by customers in Germany. In terms of quantity, it was clearly Boston Crab Meat.
+
+The Query:
+SELECT p.ProductName, COUNT(DISTINCT(o.OrderID))                                                                                                                     
+AS NumOrders,SUM(o.Quantity) AS TotalQty                                                                                                                             
+FROM ((Products p JOIN OrderDetails o                                                                                                                               
+ON p.ProductID = o.ProductID) JOIN Orders q                                                                                                                         
+ON q.OrderID = o.OrderID) JOIN Customers c                                                                                                                          
+ON c.CustomerID = q.CustomerID                                                                                                                                       
+WHERE c.Country = "Germany"                                                                                                                                         
+GROUP BY p.ProductName                                                                                                                                              
+ORDER BY NumOrders DESC,TotalQty DESC                                                                                                                               
+LIMIT 5;                                                                                                                                                             
+
+![image](https://user-images.githubusercontent.com/89163061/169714251-39353bc2-8007-43d0-96e5-8713417054da.png)
