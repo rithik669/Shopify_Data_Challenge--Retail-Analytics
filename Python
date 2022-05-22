@@ -95,7 +95,6 @@ print(clean_df.agg(
 #Duplicating Dataframe for analysis.
 clean_copy_df = clean_df.copy()
 
-
 #Dividing respective order_amount with it's number of items.
 clean_copy_df['value_per_unit'] = (clean_copy_df['order_amount']/clean_copy_df['total_items'])
 # Adding all the values of above measure
@@ -117,7 +116,6 @@ clean_copy_df['day'] = clean_copy_df['created_at'].dt.day
 day_list=clean_copy_df['day'].unique().tolist()
 day_list.sort()
 print(day_list)
-
 
 #calculating biweekly Sales Growth
 sum1=0
