@@ -62,7 +62,7 @@ c.	What product was ordered the most by customers in Germany?
 
 Ans: In terms of orders, Gorgonzola Telino was ordered 5 times which was highest by customers in Germany. In terms of quantity, it was clearly Boston Crab Meat.
 
-The Query:
+The Query:                                                                                                                                                           
 SELECT p.ProductName, COUNT(DISTINCT(o.OrderID))                                                                                                                     
 AS NumOrders,SUM(o.Quantity) AS TotalQty                                                                                                                             
 FROM ((Products p JOIN OrderDetails o                                                                                                                               
