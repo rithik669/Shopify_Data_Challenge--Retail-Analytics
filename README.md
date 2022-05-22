@@ -25,5 +25,5 @@ It is essential to have an appropriate metric to report for data. The right metr
 
 
 c.	What is its value?
-Ans:  35.416%
+Ans: 35.416%
 
