@@ -24,3 +24,24 @@ b.	What metric would you report for this dataset?
 c.	What is its value?
 Ans: 35.416%
 
+
+
+Question 2: For this question you’ll need to use SQL. Follow this link to access the data set required for the challenge. Please use queries to answer the following questions. Paste your queries along with your final numerical answers below.
+
+a.	How many orders were shipped by Speedy Express in total?
+
+Ans: Speedy Express shipped total 54 orders. The following are the query and the result.  
+
+The Query:
+
+SELECT s.ShipperName,COUNT(DISTINCT(o.OrderID)) AS OrdersShipped
+FROM Shippers s JOIN Orders o 
+ON s.ShipperID = o.ShipperID  
+WHERE s.ShipperName = "Speedy Express"
+GROUP BY s.ShipperName;
+
+
+![image](https://user-images.githubusercontent.com/89163061/169713902-f41591f9-a78b-4392-8501-a5542ed5f73b.png)
+
+
+
