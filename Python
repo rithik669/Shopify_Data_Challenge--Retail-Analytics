@@ -1,0 +1,139 @@
+#Shopify Data Challenge-Python
+#Rithik Sai Ponugoti
+
+#Importing Packages
+import os,getpass
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+#importing openpyxl for reading excel sheets.
+from openpyxl import load_workbook
+
+#setting the directory
+the_desktop = os.path.join('C:\\Users',getpass.getuser(),'Desktop')
+os.chdir(the_desktop)
+
+#loading workbook
+shopify_wb = load_workbook('2019 Winter Data Science Intern Challenge Data Set.xlsx')
+#getting worksheet
+shopify_ws= shopify_wb[ 'Sheet1' ]
+data= shopify_ws.values
+#extracting columns
+columns = next(data)[0:7]
+#converting into Dataframe
+shopify_df= pd.DataFrame(data, columns=columns)
+#viewing top 10 rows
+shopify_df.head(10)
+#inspecting the shape
+shopify_df.shape
+#inspecting Dtype
+shopify_df.dtypes
+#Let's create two separate columns for Date and time from the column 'created_at'
+
+shopify_df['Date'] = pd.to_datetime(shopify_df['created_at']).dt.date
+shopify_df['Time'] = pd.to_datetime(shopify_df['created_at']).dt.time
+
+#looking over the data
+shopify_df.shop_id.value_counts()
+shopify_df.agg(
+    {
+        "order_amount": ["min", "max","mean"],
+        "total_items": ["min", "max", "mean"],
+    }
+)
+
+#Trying to observe how we have previously arrived at AOV value of $3145.13 (Kind of verifying)
+
+total_order_value=shopify_df['order_amount'].sum()
+total_orders=shopify_df['order_id'].count()
+print (total_order_value)
+print(total_orders)
+average_order_value= total_order_value/total_orders
+print(average_order_value)
+
+#It was $3145.128.
+#It is higher because there were orders that involved huge order_amount.
+shopify_df.sort_values(by=['order_amount'],ascending=False).head(50)
+
+#Let's look deep into the rows that involved highest amount i.e. order_amount = 704000
+
+shopify_df.loc[shopify_df['order_amount'] == 704000]
+
+#It is observed that there are series of payments of same amount (704000) were made by the same user to the same shop. 
+# It is also observed that same transactions are reported with the different order_id. It is highly unlikely to have order same item with same quantity at the same time at precision of seconds.
+# For example
+
+shopify_df[shopify_df.duplicated(['shop_id', 'user_id', 'order_amount', 'total_items', 'payment_method','Date','Time'],keep=False)].sort_values('Date')
+
+#Assuming that the same data was entered multiple times,these duplicate columns are dropped.
+
+clean_df=shopify_df.drop_duplicates(subset=['shop_id','user_id','order_amount','total_items','payment_method','Date','Time'])
+clean_df.shape
+
+# Now looking at the second highest order amount --- $51450 for 2 items, implying $25725.0 for 1 item.
+# As sneaker prices are relatively affordable, there is a decent chance that the price of that Sneaker was incorrectly interpreted. They might have loaded the amount in cents rather than in dollars.
+#Therefore the order_amount for shop_id: 78 is changed into dollars
+
+
+clean_df['order_amount'][clean_df.shop_id == 78] = clean_df["order_amount"]*0.01
+clean_df.loc[clean_df['shop_id'] == 78]
+clean_df.sort_values(by=['order_amount'],ascending=False).head(50)
+
+#Now looking at the values.
+print(clean_df.agg(
+   {
+       "order_amount": ["min", "max","mean"],
+       "total_items": ["min", "max", "mean"],
+   }
+))
+
+
+#The AOV is $1994.89 for the period of 30 days. It's still a bit higher because of the transactions that involved purchasing of huge quantity.
+#If the intention was to know the average value per sneaker, its better to perform calculation in this way.
+
+#Duplicating Dataframe for analysis.
+clean_copy_df = clean_df.copy()
+
+
+#Dividing respective order_amount with it's number of items.
+clean_copy_df['value_per_unit'] = (clean_copy_df['order_amount']/clean_copy_df['total_items'])
+# Adding all the values of above measure
+total = clean_copy_df['value_per_unit'].sum()
+
+#Counting the total orders
+total_orders=clean_copy_df['order_id'].count()
+avg_value_per_unit = total/total_orders
+print(avg_value_per_unit)
+
+#Therfore the average sneaker value is $153.240
+
+#------------------------------------------------#
+
+#My choice of metric for this data set would be "Sales Growth" over a biweekly period. I think it helps us to identify the trend of sales that helps us to evaluate the business.
+
+#Assigning Days to a list
+clean_copy_df['day'] = clean_copy_df['created_at'].dt.day
+day_list=clean_copy_df['day'].unique().tolist()
+day_list.sort()
+print(day_list)
+
+
+#calculating biweekly Sales Growth
+sum1=0
+sum2=0
+for i in day_list:
+    if i<15:
+        s1=clean_copy_df[clean_copy_df['day']== i]['order_amount'].sum()
+        sum1+=s1
+    else:
+        s2=clean_copy_df[clean_copy_df['day']== i]['order_amount'].sum()
+        sum2+=s2
+
+print(sum1)
+print(sum2)
+
+sales_growth= (sum2-sum1)*100/(sum1)
+print(sales_growth)
+#It is observed that Biweekly sales growth is 35.416%. This metric can be drill downed to weeks, days and can be rolled up to months and years. This metric helps to determine the growth of sales.
+#The end
