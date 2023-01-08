@@ -1,6 +1,7 @@
 # Shopify_Data_Challenge
 
-#Question-1 (Python)
+# Question-1 (Python)
+
 On Shopify, we have exactly 100 sneaker shops, and each of these shops sells only one model of shoe. We want to do some analysis of the average order value (AOV). When we look at orders data over a 30-day window, we naively calculate an AOV of $3145.13. Given that we know these shops are selling sneakers, a relatively affordable item, something seems wrong with our analysis. 
 
 a.	Think about what could be going wrong with our calculation. Think about a better way to evaluate this data. 
@@ -18,10 +19,11 @@ a.	Think about what could be going wrong with our calculation. Think about a bet
 
 b.	What metric would you report for this dataset?
 
-  It is essential to have an appropriate metric to report for data. The right metric  aids businesses in understanding their process and growth. For this dataset,     my choice of metric would be the measure of Sales growth over a biweekly period. This measure can help to analyze the trend of sales. Additionally, there is a       possibility of drilling down this measure to weeks, days, and rolling up to months, quarters, and years.
+Ans: It is essential to have an appropriate metric to report for data. The right metric  aids businesses in understanding their process and growth. For this dataset, my choice of metric would be the measure of Sales growth over a biweekly period. This measure can help to analyze the trend of sales. Additionally, there is a possibility of drilling down this measure to weeks, days, and rolling up to months, quarters, and years.
                                                                                                                                                                                
 
 c.	What is its value?
+
 Ans: 35.416%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 # Question 2: - (SQL)
@@ -32,7 +34,7 @@ a.	How many orders were shipped by Speedy Express in total?
 
 Ans: Speedy Express shipped total 54 orders. The following are the query and the result.  
 
-The Query:
+# The Query:
 
 SELECT s.ShipperName,COUNT(DISTINCT(o.OrderID)) AS OrdersShipped                                                                                            
 FROM Shippers s JOIN Orders o                                                                                                                                       
@@ -48,7 +50,7 @@ b.	What is the last name of the employee with the most orders?
 Ans: Peacock is the last name of the employee with the highest number of orders- 40. 
 The following are the query and its result. 
 
-The Query:
+# The Query:
 
 SELECT e.LastName,COUNT(DISTINCT(o.OrderID)) AS NumOrders                                                                                                           
 FROM Employees e JOIN Orders o                                                                                                                                       
@@ -65,7 +67,7 @@ c.	What product was ordered the most by customers in Germany?
 
 Ans: In terms of orders, Gorgonzola Telino was ordered 5 times which was highest by customers in Germany. In terms of quantity, it was clearly Boston Crab Meat.
 
-The Query:                                                                                                                                                           
+# The Query:                                                                                                                                                           
 SELECT p.ProductName, COUNT(DISTINCT(o.OrderID))                                                                                                                     
 AS NumOrders,SUM(o.Quantity) AS TotalQty                                                                                                                             
 FROM ((Products p JOIN OrderDetails o                                                                                                                               
